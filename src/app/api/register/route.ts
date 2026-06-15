@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseClient } from "@/lib/supabase";
 
 // Define the directory and file path for storing leads
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -40,6 +40,7 @@ export async function POST(request: Request) {
     };
 
     // 1. Insert into Supabase
+    const supabase = getSupabaseClient();
     const { error: dbError } = await supabase
       .from("leads")
       .insert([
